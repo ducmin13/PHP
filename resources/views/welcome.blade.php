@@ -9,14 +9,18 @@
     <!-- The above 4 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 
     <!-- Title  -->
-    <title>Essence - Fashion Ecommerce Template</title>
+    <title>Apple Store</title>
 
     <!-- Favicon  -->
     <link rel="icon" href="{{asset('public/FE/img/core-img/favicon.ico')}}">
 
     <!-- Core Style CSS -->
     <link rel="stylesheet" href="{{asset('public/FE/css/core-style.css')}}">
+<<<<<<< Updated upstream
     <link rel="stylesheet" href="{{asset('/public/FE/style.css')}}">
+=======
+    <link rel="stylesheet" href="{{asset('public/FE/style.css')}}">
+>>>>>>> Stashed changes
 
 </head>
 
@@ -27,6 +31,10 @@
             <!-- Classy Menu -->
             <nav class="classy-navbar" id="essenceNav">
                 <!-- Logo -->
+<<<<<<< Updated upstream
+=======
+                  <a class="nav-brand" href="{{ URL::to('/')}}"><img style="height: 40x; width: 90px;" src="{{asset('public/FE/img/core-img/logo4.png')}}" alt=""></a>
+>>>>>>> Stashed changes
                 <!-- Navbar Toggler -->
                 <div class="classy-navbar-toggler">
                     <span class="navbarToggler"><span></span><span></span><span></span></span>
@@ -222,8 +230,9 @@
         </div>
     </section>
     <!-- ##### Welcome Area End ##### -->
-
-   @yield('content')
+    
+ @yield('content')
+  
 
     <!-- ##### Footer Area Start ##### -->
     <footer class="footer_area clearfix">
