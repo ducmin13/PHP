@@ -12,6 +12,7 @@ Route::get('laravel/php/show-category/{category_id}', 'App\Http\Controllers\Cate
 Route::get('laravel/php/show-brand/{brand_id}', 'App\Http\Controllers\BrandProduct@show_brand');
 
 Route::get('laravel/php/product-detail/{product_id}', 'App\Http\Controllers\ProductController@product_detail');
+Route::get('laravel/php/product-home', 'App\Http\Controllers\ProductController@product_home');
 
 
 //BE
@@ -62,3 +63,19 @@ Route::get('laravel/php/delete-product/{product_id}','App\Http\Controllers\Produ
 
 Route::get('laravel/php/active-product/{product_id}','App\Http\Controllers\ProductController@active_product');
 Route::get('laravel/php/inactive-product/{product_id}','App\Http\Controllers\ProductController@inactive_product');
+
+//Cart
+Route::post('laravel/php/save-cart','App\Http\Controllers\CartController@save_cart');
+// Route::get('laravel/php/show-cart','App\Http\Controllers\CartController@show_cart');
+Route::get('laravel/php/delete-to-cart/{rowId}','App\Http\Controllers\CartController@delete_to_cart');
+
+//Checkout
+Route::get('laravel/php/login-checkout','App\Http\Controllers\CheckoutController@login_checkout');
+Route::get('laravel/php/logout','App\Http\Controllers\CheckoutController@logout');
+Route::get('laravel/php/registor-checkout','App\Http\Controllers\CheckoutController@registor_checkout');
+Route::post('laravel/php/add-customer','App\Http\Controllers\CheckoutController@add_customer');
+
+Route::post('laravel/php/save-checkout','App\Http\Controllers\CheckoutController@save_checkout');
+
+
+Route::get('laravel/php/checkout','App\Http\Controllers\CheckoutController@checkout');

@@ -41,11 +41,12 @@
                     <!-- Nav Start -->
                     <div class="classynav">
                         <ul>
-                            <li><a href="{{ URL::to('laravel/php/product/',$product_id) }}">Shop</a>
+                            <li>
+                                    <a href="{{ URL::to('laravel/php/product-home') }}">Shop</a>
                                 <div class="megamenu">   
                                     @foreach($category as $key => $cate)
                                     <ul class="single-mega cn-col-4">                                        
-                                        <a style="font-size:16px" href="{{ URL::to('laravel/php/show-category',$cate->category_id) }}" class="title">{{ $cate -> category_name }}</a>    
+                                        <a style="font-size:16px; font-weight:bold" href="{{ URL::to('laravel/php/show-category',$cate->category_id) }}" class="title">{{ $cate -> category_name }}</a>    
                                         @foreach($brand as $key => $br)
                                             @if($br->category_id == $cate->category_id )
                                                 <a style="font-size:13px" href="{{ URL::to('laravel/php/show-brand',$br->brand_id) }}">{{ $br -> brand_name }}</a>
@@ -73,11 +74,26 @@
                 <!-- Favourite Area -->
                 <div class="favourite-area">
                     <a href="#"><img src="{{ asset('laravel/php/public/FE/img/core-img/heart.svg') }}" alt=""></a>
-                </div>
-                <!-- User Login Info -->
+                </div>          
+                <?php 
+                 $customer_id = Session::get('customer_id');
+                 if($customer_id != NULL){
+                ?>
                 <div class="user-login-info">
-                    <a href="{{ URL::to('admin') }}"><img src="{{ asset('laravel/php/public/FE/img/core-img/user.svg') }}" alt=""></a>
+                    <a href="{{ URL::to('laravel/php/user_info') }}"><img src="{{ asset('laravel/php/public/FE/img/core-img/user.svg') }}" alt=""></a>
                 </div>
+                <div class="user-login-info">
+                    <a href="{{ URL::to('laravel/php/logout') }}"><img src="{{ asset('laravel/php/public/FE/img/core-img/sign_out.svg') }}" alt=""></a>
+                </div>
+                <?php 
+                    }else{
+                ?>
+                <div class="user-login-info">
+                    <a href="{{ URL::to('laravel/php/login-checkout') }}"><img src="{{ asset('laravel/php/public/FE/img/core-img/user.svg') }}" alt=""></a>
+                </div>
+                <?php 
+                    }   
+                ?>
                 <!-- Cart Area -->
                 <div class="cart-area">
                     <a href="#" id="essenceCartBtn"><img src="{{ asset('laravel/php/public/FE/img/core-img/bag.svg') }}" alt=""> <span>3</span></a>
@@ -99,56 +115,28 @@
         </div>
 
         <div class="cart-content d-flex">
-
+            <?php
+            $content = Cart::content();
+            ?>
             <!-- Cart List Area -->
             <div class="cart-list">
+                @foreach($content as $v_content)
                 <!-- Single Cart Item -->
                 <div class="single-cart-item">
-                    <a href="#" class="product-image">
-                        <img src="{{ asset('laravel/php/public/FE/img/product-img/product-1.jpg') }}" class="cart-thumb" alt="">
+                    <a href="{{ URL::to('laravel/php/delete-to-cart/'.$v_content-> rowId) }}" class="product-image" style="width: 200px; height: 200px;">
+                        <img src="{{ asset('laravel/php/public/uploads/product/'.$v_content-> options-> image) }}" class="cart-thumb" alt="">
                         <!-- Cart Item Desc -->
                         <div class="cart-item-desc">
-                          <span class="product-remove"><i class="fa fa-close" aria-hidden="true"></i></span>
-                            <span class="badge">Mango</span>
-                            <h6>Button Through Strap Mini Dress</h6>
-                            <p class="size">Size: S</p>
-                            <p class="color">Color: Red</p>
-                            <p class="price">$45.00</p>
+                          <span class="product-remove"><i class="fa fa-close"  aria-hidden="true"></i></span>
+                            <span class="badge"></span>
+                            <h6>{{ $v_content -> name }}</h6>
+                            <p class="size">{{ $v_content -> options -> storage }}</p>
+                            <p class="color">{{ $v_content -> options -> color }}</p>
+                            <p class="price">{{number_format($v_content-> price).' VNĐ'}}</p>
                         </div>
                     </a>
                 </div>
-
-                <!-- Single Cart Item -->
-                <div class="single-cart-item">
-                    <a href="#" class="product-image">
-                        <img src="{{ asset('laravel/php/public/FE/img/product-img/product-2.jpg') }}" class="cart-thumb" alt="">
-                        <!-- Cart Item Desc -->
-                        <div class="cart-item-desc">
-                          <span class="product-remove"><i class="fa fa-close" aria-hidden="true"></i></span>
-                            <span class="badge">Mango</span>
-                            <h6>Button Through Strap Mini Dress</h6>
-                            <p class="size">Size: S</p>
-                            <p class="color">Color: Red</p>
-                            <p class="price">$45.00</p>
-                        </div>
-                    </a>
-                </div>
-
-                <!-- Single Cart Item -->
-                <div class="single-cart-item">
-                    <a href="#" class="product-image">
-                        <img src="{{ asset('laravel/php/public/FE/img/product-img/product-3.jpg') }}" class="cart-thumb" alt="">
-                        <!-- Cart Item Desc -->
-                        <div class="cart-item-desc">
-                          <span class="product-remove"><i class="fa fa-close" aria-hidden="true"></i></span>
-                            <span class="badge">Mango</span>
-                            <h6>Button Through Strap Mini Dress</h6>
-                            <p class="size">Size: S</p>
-                            <p class="color">Color: Red</p>
-                            <p class="price">$45.00</p>
-                        </div>
-                    </a>
-                </div>
+                @endforeach
             </div>
 
             <!-- Cart Summary -->
@@ -156,14 +144,26 @@
 
                 <h2>Summary</h2>
                 <ul class="summary-table">
-                    <li><span>subtotal:</span> <span>$274.00</span></li>
+                    <li><span>subtotal:</span> <span>{{Cart::subtotal().' VNĐ'}}</span></li>
                     <li><span>delivery:</span> <span>Free</span></li>
-                    <li><span>discount:</span> <span>-15%</span></li>
-                    <li><span>total:</span> <span>$232.00</span></li>
+                    <li><span>discount:</span> <span>{{ Cart::discount().' VNĐ' }}</span></li>
+                    <li><span>total:</span> <span>{{Cart::priceTotal().' VNĐ'}}</span></li>
                 </ul>
-                <div class="checkout-btn mt-100">
-                    <a href="checkout.html" class="btn essence-btn">check out</a>
+                <?php
+                if (Session::has('customer_id')) { ?>
+
+                    <div class="checkout-btn mt-100">
+                    <a href="{{ URL::to('laravel/php/checkout') }}" class="btn essence-btn">check out</a>
                 </div>
+                <?php
+                } else { ?>
+                    <div class="checkout-btn mt-100">
+                    <a href="{{ URL::to('laravel/php/login-checkout') }}" class="btn essence-btn">check out</a>
+                </div>
+                <?php
+                }
+                ?>
+                
             </div>
         </div>
     </div>
